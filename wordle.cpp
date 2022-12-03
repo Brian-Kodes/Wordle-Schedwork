@@ -1,7 +1,7 @@
 // For debugging
 #include <iostream>
 // For std::remove
-#include <algorithm>
+//#include <algorithm>
 #include <map>
 #include <set>
 #include <vector>
@@ -13,7 +13,7 @@ using namespace std;
  
 // Add prototypes of helper functions here
 //we want recursive function here
-void helperFunction(const std::string& floating, const std::set<std::string>& dict, unsigned int i, std::string possibleWord, vector<char> &floatMethod, std::set<std::string> &results)
+void helperFunction(const std::string& floating, const std::set<std::string>& dict, unsigned int i, std::string possibleWord, set<char> &floatMethod, std::set<std::string> &results)
 {
  //vector <std::string> comboWords;
  int blankCount = 0;
@@ -45,18 +45,19 @@ void helperFunction(const std::string& floating, const std::set<std::string>& di
  
  // current letter is a dash
  // if there are still floating letters remaining
+ std::set<char>::iterator it;
  if (floatMethod.size()) {
-   for (int j = 0; j < floatMethod.size(); j++)
+   //for (int j = 0; j < floatMethod.size(); j++)
+   for (it = floatMethod.begin(); it != floatMethod.end(); it++)
    {
- 
      //first, make temp vector equal to floatingMethod
      //possibleWord[i] = floating[i]
      //change temp to not include floating[i] delete
      //recurse with temporary instead of floatingMethod and i+1
      //make the change permanent by making temp = floatingMethod
-     vector<char> temp = floatMethod;
+     set<char> temp = floatMethod;
      //vector<char>::iterator it = temp.begin();
-     possibleWord[i] = temp[j];
+     possibleWord[i] = *it;
      //for (it = temp.begin(); it != temp.end(); it++)
      /*while (it != temp.end())
      {
@@ -70,8 +71,8 @@ void helperFunction(const std::string& floating, const std::set<std::string>& di
          it++;
        }
      }*/
-     //temp.erase(temp.begin());
-     temp.erase(std::find(temp.begin(), temp.end(), floatMethod[j]));
+     temp.erase(*it);
+     //temp.erase(std::find(temp.begin(), temp.end(), floatMethod[j]));
      helperFunction(floating, dict, i + 1, possibleWord, temp, results);
    }
  }
@@ -131,14 +132,16 @@ std::set<std::string> wordle(
    char inString[in.length()];
    strcpy(inString, in.c_str());
    unsigned int i = 0;
-   vector<char> floatMethod;
+   //vector<char> floatMethod;
+   set<char> floatMethod;
    std::string letterHelper = floating;
    set<std::string>:: iterator it;
    std::string possibleWord = "";
    std::set<std::string> results;
    for (unsigned int i = 0; i < floating.size(); i++)
    {
-     floatMethod.push_back(floating[i]);
+     //floatMethod.push_back(floating[i]);
+     floatMethod.insert(floating[i]);
    }
    helperFunction(floating, dict, i, in, floatMethod, results);
    // Add your code here
