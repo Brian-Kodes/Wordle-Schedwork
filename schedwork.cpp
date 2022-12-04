@@ -118,9 +118,6 @@ bool schedule(
     }
   }
     return helperFunction (avail, dailyNeed, maxShifts, tempVector, numShiftsWorked, row, col);
-    //pass avail ref, sched ref, and numDays qworked by ref
-
-
 }
 
 
